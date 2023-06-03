@@ -1,0 +1,2 @@
+VITE_API_URL='https://api-dev.estuary.solutions:8443/minhlong-crm-api-dev'
+VITE_APP_BUILD='1.0.7 20230529'
