@@ -4,9 +4,8 @@ type NavsChild = {
   key: string;
   icon?: ReactElement;
   title?: string | ReactElement;
-  label: string | ReactElement;
+  label?: string | ReactElement;
   element?: ReactElement;
-  hidden?: true;
 };
 
 export type TypeNavs = NavsChild & {

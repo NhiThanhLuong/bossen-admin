@@ -11,7 +11,7 @@ export type DataUser = {
   status: number;
   type: number;
   images: {
-    avatar: ImageData;
+    avatar?: ImageData;
   };
 };
 
@@ -25,7 +25,7 @@ export type BodyUpdateUser = Partial<
   Pick<DataUser, 'name' | 'phone' | 'type' | 'email' | 'status' | 'address'> & {
     password: string;
     images: {
-      avatar: string;
+      avatar?: string;
     };
   }
 >;

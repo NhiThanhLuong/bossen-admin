@@ -48,7 +48,7 @@ function App() {
           token: {
             colorPrimary:
               COLOR[theme === 'dark' ? 'DARK_PRIMARY' : 'LIGHT_PRIMARY'],
-            fontFamily: 'Optima VU',
+            // fontFamily: 'Optima VU',
           },
           algorithm:
             theme === 'dark'

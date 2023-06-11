@@ -33,7 +33,7 @@ const LayoutComponent = () => {
           <Footer className="text-center !py-2 z-10">
             <span>
               Copyright &copy; {year} Powered by Estuary Solutions, version{' '}
-              {import.meta.env.VITE_APP_BUILD}
+              {import.meta.env.VITE_VERSION}
             </span>
           </Footer>
         </Layout>

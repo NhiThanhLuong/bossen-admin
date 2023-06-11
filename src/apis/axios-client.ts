@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
+import { LOGIN_PATH } from '@/data/constant';
 import axios from 'axios';
 
 const axiosClient = axios.create({
@@ -36,10 +37,10 @@ axiosClient.interceptors.response.use(
   function (error) {
     // Any status codes that falls outside the range of 2xx cause this function to trigger
     // Do something with response error
-    if (error?.response?.status === 401) {
+    if (error?.response?.status === 403) {
       // clear token ...
-      // localStorage.removeItem('token');
-      // window.location.replace(LOGIN_PATH);
+      localStorage.removeItem('token');
+      window.location.replace(LOGIN_PATH);
     }
 
     return Promise.reject(error);

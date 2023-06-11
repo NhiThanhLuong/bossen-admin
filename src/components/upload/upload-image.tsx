@@ -1,29 +1,35 @@
 import { useApp } from '@/hooks';
-import { UploadProps, Upload } from 'antd';
-import { RcFile } from 'antd/es/upload';
-import { FC, useEffect, useState } from 'react';
-import { beforeUpload, getBase64 } from './upload';
+import { getPathImg, localToken } from '@/utils';
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
-import { localToken } from '@/utils';
+import { Upload, UploadProps } from 'antd';
+import { FC, useState } from 'react';
+import styled from 'styled-components';
+import { beforeUpload } from './upload';
 
-type Props = UploadProps & {
+type UploadStyleProps = UploadProps & {
+  height?: number;
+};
+
+type Props = UploadStyleProps & {
   actionAPI?: string;
   //   className: string
   //   initImageURL: string;
   isDisabled?: boolean;
   value?: string;
   onChange?: (_value: unknown) => void;
+
   //   onChangeCallback: string
   //   height = 128,
   //   isGetLink = false,
 };
 
 const UploadImage: FC<Props> = ({
-  actionAPI,
+  actionAPI = import.meta.env.VITE_UPLOAD_API as string,
   //   initImageURL,
   isDisabled,
   value,
   onChange,
+  height = 256,
   ...props
 }) => {
   const { message } = useApp();
@@ -37,13 +43,10 @@ const UploadImage: FC<Props> = ({
   //     }
   //   }, [initImageURL]);
 
-  const handleChange: UploadProps['onChange'] = (info) => {
+  const handleChange: UploadProps<{
+    id: number;
+  }>['onChange'] = (info) => {
     const status = info.file.status;
-    //   const imageId = info.file.response?.result?.id || null;
-    const imageId = info.file;
-    //   const imageLink = info.file.response?.result?.variants[1080]?.link;
-
-    //   const paramsOnChange = isGetLink ? imageLink : imageId;
 
     if (status === 'uploading') {
       setLoading(true);
@@ -51,22 +54,21 @@ const UploadImage: FC<Props> = ({
     }
 
     if (status === 'done') {
+      const imageId = info.file.response?.id;
+
       //   getBase64(info.file.originFileObj as RcFile, (imgURL) => {
       //     setImageURL(imgURL as string);
       //   });
       setLoading(false);
 
-      onChange!(
-        imageId
-        //   onChangeCallback ? onChangeCallback(paramsOnChange) : paramsOnChange
-      );
+      onChange!(imageId);
     } else {
       setLoading(false);
       void message.error('Upload hình thất bại');
     }
   };
 
-  const uploadProps: UploadProps = {
+  const uploadProps: UploadStyleProps = {
     accept: 'image/png, image/jpeg, image/webp',
     action: actionAPI,
     listType: 'picture-card',
@@ -77,25 +79,35 @@ const UploadImage: FC<Props> = ({
     showUploadList: false,
     onChange: handleChange,
     beforeUpload: (file) => beforeUpload(message, file),
-    //   height,
+    height,
   };
 
   return (
-    <Upload {...uploadProps} {...props}>
+    <UploadStyle {...uploadProps} {...props}>
       {loading ? (
         <LoadingOutlined />
       ) : imageURL ? (
         <img
           className={'w-full h-full object-contain'}
-          src={imageURL}
+          src={getPathImg(imageURL)}
           alt="avatar"
         />
       ) : (
         <PlusOutlined />
       )}
       {!imageURL && <div className="ml-1">Chọn ảnh</div>}
-    </Upload>
+    </UploadStyle>
   );
 };
 
 export default UploadImage;
+
+const UploadStyle = styled((props: UploadStyleProps) => <Upload {...props} />)`
+  .ant-upload-select {
+    height: ${(props) => props.height}px !important;
+    width: auto !important;
+    min-width: ${(props) => (props.height! * 2) / 3}px;
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+`;

@@ -29,3 +29,6 @@ export function differentObject<T extends PlainObject>(
 
 export const isItemInList = <Type = unknown>(item: Type, list: Type[]) =>
   new Set(list).has(item);
+
+export const getPathImg = (imgSrc: string) =>
+  `${import.meta.env.VITE_ROUTE_IMG as string}/${imgSrc}`;

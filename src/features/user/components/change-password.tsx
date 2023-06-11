@@ -61,7 +61,7 @@ const ChangePassword: FC<Props> = ({
             name="confirm_password"
             className="mb-0"
             dependencies={['password']}
-            rules={validator('required').concat([validateConfirmPassword])}
+            rules={validator(['required', 'confirmPassword'])}
             hasFeedback
           >
             <Input.Password placeholder="Xác nhận mật khẩu mới" />

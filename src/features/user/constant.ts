@@ -27,7 +27,7 @@ export const USER_BREADCRUMBS = {
 
 export const USER_STATUS = {
   PAUSED: {
-    value: 1,
+    value: -2,
     label: 'Tạm ngưng',
     color: COLOR.LOGIN_BG,
   },
@@ -38,7 +38,7 @@ export const USER_STATUS = {
   },
   LOCKED: {
     value: -3,
-    label: 'Tạm khóa',
+    label: 'Đã khóa',
     color: COLOR.LOCKED,
   },
   INACTIVE: {

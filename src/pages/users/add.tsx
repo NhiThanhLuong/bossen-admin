@@ -1,7 +1,7 @@
 import { BreadcrumbsWrapper, MainAction } from '@/components';
-import { GENDER, USER_PATH } from '@/data/constant';
+import { USER_PATH } from '@/data/constant';
 import {
-  DataUser,
+  BodyUpdateUser,
   USER_BREADCRUMBS,
   USER_NAME,
   UserForm,
@@ -16,7 +16,8 @@ const UserAdd: FC = () => {
   const navigate = useNavigate();
   const { mutate, isLoading } = useAddUserMutation();
 
-  const handleFinish = (values: Partial<DataUser>) => {
+  const handleFinish = (values: BodyUpdateUser) => {
+    console.log(values);
     mutate(values);
   };
 
@@ -27,20 +28,13 @@ const UserAdd: FC = () => {
   return (
     <BreadcrumbsWrapper breadcrumbs={USER_BREADCRUMBS.add()}>
       <Card title={`Thêm ${USER_NAME}`}>
-        <Form
-          form={form}
-          onFinish={handleFinish}
-          initialValues={{
-            gender: GENDER.MALE.value,
-          }}
-          disabled={isLoading}
-        >
+        <Form form={form} onFinish={handleFinish} disabled={isLoading}>
           <UserForm />
         </Form>
-        <div className="flex justify-end mt-4">
+        <div className="mt-4">
           <Button onClick={setDefaultPassword}>
-            Mật khẩu mặc định là:{' '}
-            <strong className="text-base"> 123456a@</strong>
+            Đặt mật khẩu mặc định là:{'  '}
+            <strong className="text-base">123456a@</strong>
           </Button>
         </div>
         <MainAction

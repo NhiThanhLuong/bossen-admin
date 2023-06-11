@@ -46,6 +46,18 @@ const validate = {
       message: 'Đường dẫn này không hợp lệ theo định dạng: http(s)://www.*',
     },
   ],
+  confirmPassword: [
+    ({ getFieldValue }) => ({
+      validator(_, value) {
+        if (!value || getFieldValue('password') === value) {
+          return Promise.resolve();
+        }
+        return Promise.reject(
+          new Error('Nội dung phải trùng khớp với mật khẩu trên')
+        );
+      },
+    }),
+  ] as [Rule],
 };
 
 const validateFn = {
@@ -71,7 +83,7 @@ const validateFn = {
 };
 
 type TypeValidateKey = keyof typeof validate;
-const validator = (key: TypeValidateKey | TypeValidateKey[]): Rule[] => {
+const validator = (key: TypeValidateKey | TypeValidateKey[]) => {
   if (Array.isArray(key)) {
     return key.reduce(
       (result: Rule[], item) => result.concat(validate[item] as Rule[]),

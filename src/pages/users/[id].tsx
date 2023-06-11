@@ -2,15 +2,14 @@ import { BreadcrumbsWrapper, MainAction } from '@/components';
 import {
   BodyUpdateUser,
   ChangePassword,
-  DataUser,
   USER_BREADCRUMBS,
   USER_NAME,
   UserForm,
   UserPasswordDropdown,
+  useInfoQuery,
   useUpdateUserMutation,
   useUserDetailQuery,
 } from '@/features/user';
-import { useInfoQuery } from '@/hooks';
 import { differentObject } from '@/utils';
 import { Card, Form } from 'antd';
 import { FC, useEffect, useMemo } from 'react';
@@ -32,9 +31,8 @@ const UserDetail: FC = () => {
       data && {
         ...data,
         images: {
-          avatar: data.images.avatar[128].id,
+          avatar: data.images.avatar && data.images.avatar[128].id,
         },
-        // dateOfBirth: data.dateOfBirth && dayjs(data.dateOfBirth),
       },
     [data]
   );
@@ -50,9 +48,6 @@ const UserDetail: FC = () => {
 
   const handleFinish = (values: BodyUpdateUser) => {
     const dataChanged = differentObject(values, initialValues);
-    // if (values.dateOfBirth) {
-    //   dataChanged.dateOfBirth = dayjs(values.dateOfBirth).format('YYYY-MM-DD');
-    // }
 
     mutate(dataChanged, {
       onSuccess: () => {

@@ -52,13 +52,11 @@ const navs: TypeNavs[] = [
         key: '/:id',
         label: `chi tiết ${USER_NAME}`,
         element: <UserDetail />,
-        hidden: true,
       },
       {
         key: '/add',
         label: `Thêm ${USER_NAME}`,
         element: <UserAdd />,
-        hidden: true,
       },
     ],
   },
@@ -72,7 +70,6 @@ const navs: TypeNavs[] = [
         key: '/:id',
         label: `chi tiết ${MEMBER_NAME}`,
         element: <MemberDetail />,
-        hidden: true,
       },
     ],
   },
@@ -86,7 +83,6 @@ const navs: TypeNavs[] = [
         key: '/:id',
         label: `chi tiết ${STORE_NAME}`,
         element: <StoreDetail />,
-        hidden: true,
       },
     ],
   },
@@ -125,7 +121,7 @@ const getShowNavigation = (
   nav: TypeNavs,
   basePath = ''
 ): TypeNavs | undefined => {
-  if (nav.hidden === true) return;
+  if (!nav.label) return;
   if (nav.children) {
     const arr: TypeNavs[] = [];
     for (const n of nav.children) {

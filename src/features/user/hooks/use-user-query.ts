@@ -70,3 +70,10 @@ export const useAddUserMutation = () => {
     },
   });
 };
+
+export const useInfoQuery = () => {
+  return useQuery({
+    queryKey: ['myInfo'],
+    queryFn: userApi.getInfoMe,
+  });
+};

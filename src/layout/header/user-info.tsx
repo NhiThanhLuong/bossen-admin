@@ -5,9 +5,9 @@ import { AiOutlineDown, AiOutlineLogout, AiOutlineUser } from 'react-icons/ai';
 
 import { USER_PATH } from '@/data/constant';
 import { useLogoutMutation } from '@/features/auth';
-import { useInfoQuery } from '@/hooks';
 import { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useInfoQuery } from '@/features/user';
 
 const items: ItemType[] = [
   {

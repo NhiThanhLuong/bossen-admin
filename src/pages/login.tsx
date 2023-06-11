@@ -1,69 +1,23 @@
-import {
-  App,
-  Button,
-  Card,
-  Checkbox,
-  ConfigProvider,
-  Form,
-  Image,
-  Input,
-  Row,
-  Typography,
-  theme,
-} from 'antd';
+import { Card, ConfigProvider, Image, Typography, theme } from 'antd';
 import { FC, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useReadLocalStorage, useSessionStorage } from 'usehooks-ts';
+import { useBoolean, useReadLocalStorage } from 'usehooks-ts';
 
 import { COLOR, DASHBOARD_PATH } from '@/data/constant';
-import { LoginValues, useAuthStore, useLoginMutation } from '@/features/auth';
-import { validator, validatorFn } from '@/utils';
-import { AiOutlineLock, AiOutlineUser } from 'react-icons/ai';
+import { ForgotPassword, LoginForm, useAuthStore } from '@/features/auth';
 import styled from 'styled-components';
 
-type Values = LoginValues & {
-  isSaved?: boolean;
-};
-
 const Login: FC = () => {
-  const { message } = App.useApp();
   const navigate = useNavigate();
+  const { value: isForgot, setTrue } = useBoolean(false);
   const token = useAuthStore((state) => state.token);
-  const login = useAuthStore((state) => state.login);
   const tokenLocal = useReadLocalStorage('token');
-
-  const [savedData, setSavedData] = useSessionStorage<
-    Partial<Values> | undefined
-  >('savedData', {
-    isSaved: false,
-  });
-
-  const { mutate, isLoading } = useLoginMutation();
 
   useEffect(() => {
     if (token || tokenLocal) {
       navigate(DASHBOARD_PATH, { replace: true });
     }
   }, [navigate, token, tokenLocal]);
-
-  const handleFinish = (values: Values) => {
-    const { isSaved, ...formValues } = values;
-    setSavedData(
-      isSaved
-        ? values
-        : {
-            isSaved: false,
-          }
-    );
-    mutate(formValues, {
-      onSuccess: ({ token }) => {
-        login(token);
-      },
-      onError: () => {
-        void message.error('Email hoặc mật khẩu không đúng');
-      },
-    });
-  };
 
   return (
     <ConfigProvider
@@ -77,7 +31,7 @@ const Login: FC = () => {
       }}
     >
       <div
-        className="grid h-full w-full justify-end"
+        className="grid justify-end w-full h-full"
         style={{
           background: 'url(/bg-login.png) no-repeat center/cover',
         }}
@@ -93,56 +47,15 @@ const Login: FC = () => {
           <Typography.Text className="slogan">
             We care your pets
           </Typography.Text>
-          <Form
-            initialValues={savedData}
-            onFinish={handleFinish}
-            disabled={isLoading}
-          >
-            <Form.Item
-              name="email"
-              rules={validator(['email', 'required'])}
-              className="mb-[2vh]"
-            >
-              <Input
-                prefix={<AiOutlineUser />}
-                size="large"
-                placeholder="Email"
-              />
-            </Form.Item>
+          {isForgot ? (
+            <ForgotPassword />
+          ) : (
+            <LoginForm setForgotTrue={setTrue} />
+          )}
 
-            <Form.Item
-              name="password"
-              rules={validator(['required', 'noWhiteSpace']).concat(
-                validatorFn('minAndMax')(8, 16)
-              )}
-              className="mb-[2vh]"
-            >
-              <Input.Password
-                prefix={<AiOutlineLock />}
-                placeholder="Mật khẩu"
-                size="large"
-              />
-            </Form.Item>
-            <Row className="items-center justify-between">
-              <Form.Item
-                name="isSaved"
-                valuePropName="checked"
-                className="mb-0"
-              >
-                <Checkbox>
-                  <span className="text-black">Ghi nhớ</span>
-                </Checkbox>
-              </Form.Item>
-              <span>Quên mật khẩu</span>
-            </Row>
-
-            <Button htmlType="submit" type="primary">
-              <span className="text-xl font-bold">Đăng nhập</span>
-            </Button>
-          </Form>
           <div className="mt-4 text-black">
-            <span className="block">Version 1.0.0</span>
-            <span className="">Copyright &copy; 2023 BOSSEN</span>
+            <p className="my-0">Version {import.meta.env.VITE_VERSION}</p>
+            <span>Copyright &copy; 2023 BOSSEN</span>
           </div>
         </StyledCard>
       </div>
@@ -151,6 +64,7 @@ const Login: FC = () => {
 };
 
 const StyledCard = styled(Card)`
+  overflow: hidden;
   width: 40vw;
   min-width: 58vh;
   max-height: 90vh;
@@ -174,10 +88,16 @@ const StyledCard = styled(Card)`
     text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   }
 
-  button {
-    width: 327px;
-    height: 48px;
+  .btn-submit {
+    width: 80%;
+    max-height: 48px;
+    height: 6vh;
     border-radius: 36px;
+    span {
+      font-size: 1.25rem; /* 20px */
+      line-height: 1.75rem; /* 28px */
+      font-weight: 700;
+    }
   }
 
   input {

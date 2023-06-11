@@ -16,9 +16,11 @@ const userApi = {
     axiosClient.get(`${baseUrl}/${id}`),
 
   update: (id: number) => (data: BodyUpdateUser) =>
-    axiosClient.patch(`${baseUrl}/${id}`, data),
+    axiosClient.put(`${baseUrl}/${id}`, data),
 
-  add: (data: Partial<DataUser>) => axiosClient.post(baseUrl, data),
+  add: (data: BodyUpdateUser) => axiosClient.post(baseUrl, data),
+
+  getInfoMe: (): Promise<DataUser> => axiosClient.get(`${baseUrl}/me`),
 };
 
 export default userApi;
