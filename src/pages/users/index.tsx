@@ -7,6 +7,7 @@ import {
   CommonButton,
   CustomTable,
   FilterWrapper,
+  ListManagementWrapper,
 } from '@/components';
 import { FILTER_SCHEMA_PAGE_LIST, USER_PATH } from '@/data/constant';
 import {
@@ -57,7 +58,7 @@ const columns: ColumnsType<DataUser> = [
   columnAction(USER_PATH),
 ];
 
-const filtersChema: TFilterSchema<UserListParams>[] = [
+const filterSchema: TFilterSchema<UserListParams>[] = [
   filterId,
   {
     name: 'name',
@@ -116,49 +117,62 @@ const filtersChema: TFilterSchema<UserListParams>[] = [
 ];
 
 const Users: FC = () => {
-  const {
-    filter,
-    apiFilter,
-    schemaList,
-    onPageChange,
-    onFilterChange,
-    onResetFilter,
-  } = useFilter(filtersChema);
+  // const {
+  //   filter,
+  //   apiFilter,
+  //   schemaList,
+  //   onPageChange,
+  //   onFilterChange,
+  //   onResetFilter,
+  // } = useFilter(filtersChema);
 
-  const { data, isLoading, isFetching } = useUserListQuery(apiFilter);
+  // const { data, isLoading, isFetching } = useUserListQuery(apiFilter);
+
+  // return (
+  //   <BreadcrumbsWrapper breadcrumbs={USER_BREADCRUMBS.list}>
+  //     <FilterWrapper
+  //       className="mb-4"
+  //       onReset={onResetFilter}
+  //       onChange={onFilterChange}
+  //       schemaList={schemaList}
+  //       filter={filter}
+  //     />
+  //     <Card
+  //       title={`Danh sách ${USER_NAME}`}
+  //       extra={
+  //         <CommonButton action="add" href={`${USER_PATH}/add`} className="flex">
+  //           Thêm người dùng
+  //         </CommonButton>
+  //       }
+  //       loading={isLoading}
+  //     >
+  //       <CustomTable<DataUser>
+  //         name="người dùng"
+  //         isLoading={isFetching}
+  //         columns={columns}
+  //         dataSource={data?.data}
+  //         onChange={onPageChange}
+  //         pagination={{
+  //           current: filter.page as number,
+  //           pageSize: filter.limit as number,
+  //           total: data?.total,
+  //         }}
+  //       />
+  //     </Card>
+  //   </BreadcrumbsWrapper>
+  // );
 
   return (
-    <BreadcrumbsWrapper breadcrumbs={USER_BREADCRUMBS.list}>
-      <FilterWrapper
-        className="mb-4"
-        onReset={onResetFilter}
-        onChange={onFilterChange}
-        schemaList={schemaList}
-        filter={filter}
-      />
-      <Card
-        title={`Danh sách ${USER_NAME}`}
-        extra={
-          <CommonButton action="add" href={`${USER_PATH}/add`} className="flex">
-            Thêm người dùng
-          </CommonButton>
-        }
-        loading={isLoading}
-      >
-        <CustomTable<DataUser>
-          name="người dùng"
-          isLoading={isFetching}
-          columns={columns}
-          dataSource={data?.data}
-          onChange={onPageChange}
-          pagination={{
-            current: filter.page as number,
-            pageSize: filter.limit as number,
-            total: data?.total,
-          }}
-        />
-      </Card>
-    </BreadcrumbsWrapper>
+    <ListManagementWrapper
+      name={USER_NAME}
+      path={USER_PATH}
+      listBreadcrumbs={USER_BREADCRUMBS.list}
+      useQueryFn={useUserListQuery}
+      {...{
+        columns,
+        filterSchema,
+      }}
+    />
   );
 };
 

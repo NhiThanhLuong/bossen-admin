@@ -1,5 +1,4 @@
 import { TFilterSchema } from '@/ts/types';
-import { removeUndefinedObject } from '@/utils';
 import { Col, Form, FormProps, Row } from 'antd';
 import { Dayjs } from 'dayjs';
 import { cloneDeep } from 'lodash';
@@ -44,7 +43,6 @@ const FilterWrapper = <T extends Record<string, unknown>>({
 
   const handleFinish = (values: Record<string, unknown>) => {
     const transformValues = cloneDeep(values);
-    removeUndefinedObject(transformValues);
     onChange(transformValues);
   };
 

@@ -16,7 +16,11 @@ const StatusTag: FC<Props> = ({
 }) => {
   const status = findObjInArrByKey(statusList, value);
   return (
-    <Tag color={status?.color} {...props}>
+    <Tag
+      color={status?.color}
+      className="min-w-[120px] text-center px-2 py-1 text-sm font-medium"
+      {...props}
+    >
       {status?.label}
     </Tag>
   );

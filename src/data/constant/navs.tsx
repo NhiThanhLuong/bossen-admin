@@ -2,38 +2,18 @@ import { cloneDeep } from 'lodash';
 import { lazy } from 'react';
 import { AiOutlineDashboard, AiOutlineUser } from 'react-icons/ai';
 
-import { MEMBER_NAME } from '@/features/member';
-import { STORE_NAME } from '@/features/store';
 import { USER_NAME } from '@/features/user';
 import PrivateRoute from '@/routes/private-route';
 import { capitalizeFirstLetter } from '@/utils';
-import { BsPersonVcard } from 'react-icons/bs';
-import { FaStore } from 'react-icons/fa';
-import { SlEarphonesAlt } from 'react-icons/sl';
 import { Link } from 'react-router-dom';
-import {
-  DASHBOARD_PATH,
-  MEMBER_PATH,
-  STORE_PATH,
-  SUPPORT_PATH,
-  USER_PATH,
-} from './path';
+import { DASHBOARD_PATH, USER_PATH } from './path';
 import { NavParamsLink, TypeNavs, TypeRoutes } from './type-navs';
-import { SUPPORT_NAME } from '@/features/support';
 
 const Dashboard = lazy(() => import('@/pages/dashboard'));
 
 const Users = lazy(() => import('@/pages/users'));
 const UserDetail = lazy(() => import('@/pages/users/[id]'));
 const UserAdd = lazy(() => import('@/pages/users/add'));
-
-const Members = lazy(() => import('@/pages/members'));
-const MemberDetail = lazy(() => import('@/pages/members/[id]'));
-
-const Stores = lazy(() => import('@/pages/stores'));
-const StoreDetail = lazy(() => import('@/pages/stores/[id]'));
-
-const Support = lazy(() => import('@/pages/support'));
 
 const navs: TypeNavs[] = [
   {
@@ -50,47 +30,13 @@ const navs: TypeNavs[] = [
     children: [
       {
         key: '/:id',
-        label: `chi tiết ${USER_NAME}`,
         element: <UserDetail />,
       },
       {
         key: '/add',
-        label: `Thêm ${USER_NAME}`,
         element: <UserAdd />,
       },
     ],
-  },
-  {
-    key: MEMBER_PATH,
-    label: `quản lý ${MEMBER_NAME}`,
-    icon: <BsPersonVcard />,
-    element: <Members />,
-    children: [
-      {
-        key: '/:id',
-        label: `chi tiết ${MEMBER_NAME}`,
-        element: <MemberDetail />,
-      },
-    ],
-  },
-  {
-    key: STORE_PATH,
-    label: `quản lý ${STORE_NAME}`,
-    icon: <FaStore />,
-    element: <Stores />,
-    children: [
-      {
-        key: '/:id',
-        label: `chi tiết ${STORE_NAME}`,
-        element: <StoreDetail />,
-      },
-    ],
-  },
-  {
-    key: SUPPORT_PATH,
-    label: `quản lý ${SUPPORT_NAME}`,
-    icon: <SlEarphonesAlt />,
-    element: <Support />,
   },
 ];
 

@@ -12,6 +12,8 @@ import ConfirmButton from './common/confirm-button';
 import LoadingImage from './image/loading-image';
 import TypoTextStrong from './common/typo-text-strong';
 import UploadImage from './upload/upload-image';
+import ListManagementWrapper from './wrapper/list-management-wrapper';
+import CustomDescriptions from './custom/custom-descriptions';
 
 export {
   FilterWrapper,
@@ -28,4 +30,6 @@ export {
   LoadingImage,
   TypoTextStrong,
   UploadImage,
+  ListManagementWrapper,
+  CustomDescriptions,
 };

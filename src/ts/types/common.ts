@@ -1,4 +1,5 @@
 import { QueryKey, UseQueryOptions } from '@tanstack/react-query';
+import { ReactNode } from 'react';
 
 export type BreadcrumbsType = {
   title: string;
@@ -38,3 +39,10 @@ export type ImageData = Record<
     size: number;
   }
 >;
+
+export type DescriptionsRecord = {
+  isShow?: boolean;
+  isRequired?: boolean;
+  labelText: string;
+  descriptionElement: ReactNode;
+};

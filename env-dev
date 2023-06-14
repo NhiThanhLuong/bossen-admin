@@ -1,2 +1,4 @@
-VITE_API_URL='https://api-dev.estuary.solutions:8443/minhlong-crm-api-dev'
-VITE_VERSION='1.0.7 20230529'
+VITE_API_URL='http://192.168.21.24:3000/v1/'
+VITE_ROUTE_IMG='http://192.168.21.24:9000/demo/'
+VITE_UPLOAD_API='http://192.168.21.24:3000/files/upload'
+VITE_VERSION='1.0.0 20230529'
